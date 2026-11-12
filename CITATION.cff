@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this replication harness or benchmark data, please cite it as below."
+authors:
+  - family-names: Yadav
+    given-names: Mukesh
+    affiliation: "Department of Electronics and Communication Engineering, JSS Academy of Technical Education, Noida, India"
+title: "Reproducing and Probing Self-Optimization in Hopfield Networks: A Negative-Results Report"
+version: 1.0.0
+date-released: 2026-11-12
+url: "https://github.com/Mukesh-Yadav-4/Hopfield-self-optimization-replication"
+references:
+  - type: article
+    authors:
+      - family-names: Weber
+        given-names: Natalya
+      - family-names: Guckelsberger
+        given-names: Christian
+      - family-names: Froese
+        given-names: Tom
+    title: "Untapped Potential in Self-Optimization of Hopfield Networks: The Creativity of Unsupervised Learning"
+    journal: "Artificial Life"
+    year: 2025
+    doi: "10.1162/ARTL.a.10"
+keywords:
+  - "Hopfield Networks"
+  - "Self-Optimization"
+  - "Hebbian Learning"
+  - "Replication Study"
+  - "Negative Results"
