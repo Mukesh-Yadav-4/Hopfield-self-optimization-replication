@@ -119,11 +119,11 @@ Across bootstrap replicates, the argmin share of $\rho = 1/e$ is $0.00$ at $T = 
 
 ![Duty Cycle Early Window Curves](duty_default_curves.png)
 
-*Figure 3: Mean post-learning energy E_AL under the cycle-dose early-window rule plotted against duty-cycle fraction rho (left) and absolute plastic steps (right) for cycle lengths T in {500, 1000, 2000}.*
+*Figure 3: Mean post-learning energy E_AL under the cycle-dose early-window rule plotted against duty-cycle fraction rho (left) and absolute plastic steps (right) for cycle lengths T in {500, 1000, 2000}. Shaded bands are bootstrap 95% CIs of the mean across the 10 W0 instances; they mostly reflect differences between W0 instances, so overlapping bands do not imply a non-significant paired difference. The paired contrasts quoted in the text are the tests. Against absolute plastic steps the curves align only roughly: below about 250 steps the T = 500 curve lies about 3-4 energy units above the T = 1000 and T = 2000 curves.*
 
 ![Duty Cycle Late Window Curves](duty_late_curves.png)
 
-*Figure 4: Mean post-learning energy E_AL under the cycle-dose late-window rule plotted against duty-cycle fraction rho (left) and absolute plastic steps (right) for cycle lengths T in {500, 1000, 2000}.*
+*Figure 4: Mean post-learning energy E_AL under the cycle-dose late-window rule plotted against duty-cycle fraction rho (left) and absolute plastic steps (right) for cycle lengths T in {500, 1000, 2000}. Shaded bands are bootstrap 95% CIs of the mean across the 10 W0 instances; they mostly reflect differences between W0 instances, so overlapping bands do not imply a non-significant paired difference. The paired contrasts quoted in the text are the tests.*
 
 Under the late-window rule (`duty_late_runs.csv`), E_AL is nearly flat (span 0.8-2.6 energy units); no 1/e-specific optimum; at T=500 rho=1.0 is the worst late-window setting; 1/e was not contrasted against neighbouring rho values:
 * At T = 500: mean E_AL ranges from -145.55 (at ρ = 0.750) to -142.99 (at ρ = 1.000), a span of 2.55 units. Paired contrast 1/e vs 1.0 = -2.09 (95% CI [-3.88, -0.44]).
@@ -185,7 +185,7 @@ Comparing early vs. late plasticity under identical cycle doses ($D = 7.0 \times
 
 1. **Fixed Learning Rates Across Instances:** In the ablation and duty-cycle experiments, learning parameters ($\alpha$, $D$) were held fixed across all $W_0$ seeds rather than individually tuned for each matrix instance.
 2. **Single Run Seed per Instance in Duty-Cycle Arms:** The duty-cycle experiments used $n = 10$ distinct $W_0$ seeds with 1 stochastic trajectory per seed ($N = 100, 1000$ resets per phase). While paired differences across $W_0$ are informative, within-instance stochastic variance was not independently averaged.
-3. **Cycle-Dose Parameterization:** Under the cycle-dose rule, $\alpha_{\text{eff}} = D / (\rho T)$, which explicitly links the per-step learning rate to the window length; the observed collapse onto absolute steps is therefore partly built into the experimental design.
+3. **Cycle-Dose Parameterization:** Under the cycle-dose rule, $\alpha_{\text{eff}} = D / (\rho T)$, which explicitly links the per-step learning rate to the window length; the observed rough alignment onto absolute steps is therefore partly built into the experimental design.
 4. **Operational Definitions:** The concepts of "partial reset" (25% Hamming flip) and "duty cycle" (time-sliced Hebbian plasticity per reset interval) are our specific operationalizations.
 5. **Theoretical Scope:** The standard self-optimization Hopfield model contains no work constraint or intrinsic cycle duration. Froese's 1/e framework is described as summarised on his OIST page: effort allocated over a canonical $≈ 37%$ fraction of a work-constraint cycle; see his papers. Therefore, tests within this discrete model do not test or contradict Froese's framework in physical or biological domains.
 
