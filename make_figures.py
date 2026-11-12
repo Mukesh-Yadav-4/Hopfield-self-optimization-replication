@@ -43,22 +43,39 @@ def make_ablation_figure():
             w_matrix[w, j] = val
         cond_means.append(np.mean(w_matrix[:, j]))
 
-    # Draw thin grey line per W0 instance
+    cond_means = np.array(cond_means)
+
+    # Segment indices: full resets (0, 1, 2) and partial resets (3, 4, 5)
+    full_idx = [0, 1, 2]
+    partial_idx = [3, 4, 5]
+
+    # Draw thin grey lines per W0 instance in two separate segments
     for w in range(10):
-        ax.plot(xs, w_matrix[w, :], color="#888888", alpha=0.55, lw=1.1, zorder=1)
+        ax.plot(xs[full_idx], w_matrix[w, full_idx], color="#888888", alpha=0.55, lw=1.1, zorder=1)
+        ax.plot(xs[partial_idx], w_matrix[w, partial_idx], color="#888888", alpha=0.55, lw=1.1, zorder=1)
 
-    # Bold marker and line for the mean
-    ax.plot(xs, cond_means, color="#08306b", lw=2.4, marker="o", ms=7, zorder=3, label="Condition Mean")
+    # Bold marker and line for the mean in two separate segments
+    ax.plot(xs[full_idx], cond_means[full_idx], color="#08306b", lw=2.4, marker="o", ms=7, zorder=3, label="Condition Mean")
+    ax.plot(xs[partial_idx], cond_means[partial_idx], color="#08306b", lw=2.4, marker="o", ms=7, zorder=3)
 
-    # Annotate mean values above/below points
+    # Annotate mean values with white semi-transparent background box
+    bbox_props = dict(boxstyle="round,pad=0.25", fc="white", ec="none", alpha=0.85)
     for j, m in enumerate(cond_means):
-        ax.annotate(f"{m:.2f}", (xs[j], m), textcoords="offset points", xytext=(0, 8),
-                    ha="center", fontsize=8.5, fontweight="bold", color="#08306b")
+        ax.annotate(f"{m:.2f}", (xs[j], m), textcoords="offset points", xytext=(0, 9),
+                    ha="center", fontsize=8.5, fontweight="bold", color="#08306b",
+                    bbox=bbox_props, zorder=4)
 
     # Add vertical separator between full and partial resets
     ax.axvline(2.5, color="#bbbbbb", ls="--", lw=1.0, zorder=0)
-    ax.text(1.0, -125.0, "Full Resets (100%)", ha="center", fontsize=9.5, fontweight="bold", color="#333333")
-    ax.text(4.0, -125.0, "Partial Resets (25%)", ha="center", fontsize=9.5, fontweight="bold", color="#333333")
+
+    # Dynamic y-limits from data min and max with a margin of about 3-5 units
+    y_min = np.min(w_matrix) - 3.5
+    y_max = np.max(w_matrix) + 6.0
+    ax.set_ylim(y_min, y_max)
+
+    # Headers for categories
+    ax.text(1.0, y_max - 2.5, "Full Resets (100%)", ha="center", fontsize=9.5, fontweight="bold", color="#333333")
+    ax.text(4.0, y_max - 2.5, "Partial Resets (25%)", ha="center", fontsize=9.5, fontweight="bold", color="#333333")
 
     ax.set_xticks(xs)
     ax.set_xticklabels([c[2] for c in conditions], fontsize=9)
@@ -66,7 +83,6 @@ def make_ablation_figure():
     ax.set_xlabel("Condition (Reset type and learning rate alpha)", fontsize=9.5)
     ax.set_title("Steady-state energy by reset type and learning rate (n = 10 W0 instances; lower is better)", fontsize=10.5, pad=12)
     ax.grid(True, ls=":", alpha=0.5, zorder=0)
-    ax.set_ylim(-160, -122)
 
     fig.tight_layout()
     fig.savefig("ablation_E_AL.png", dpi=150)

@@ -177,7 +177,7 @@ Comparing early vs. late plasticity under identical cycle doses ($D = 7.0 \times
 
 ![Early Minus Late Plasticity Window](early_vs_late.png)
 
-*Figure 5: Paired difference in post-learning energy between early and late plasticity windows (E_AL(early) - E_AL(late)) as a function of duty fraction rho for T in {500, 1000, 2000}, with shaded 95% bootstrap confidence bands.*
+*Figure 5: Paired difference in post-learning energy between early and late plasticity windows (E_AL(early) - E_AL(late)) as a function of duty fraction rho for T in {500, 1000, 2000}, with shaded 95% bootstrap confidence bands. At rho = 1.0 the early and late windows coincide by construction, so the difference is exactly 0.*
 
 ---
 
