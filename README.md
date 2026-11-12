@@ -43,6 +43,10 @@ Simulating this protocol with 4 distinct learning rates reproduces the four qual
 | **C: Appropriate, Not Novel** | $1.0 \times 10^{-6}$ | $-138.99$ | $-139.00$ | $1.00$ | $69.12$ | Convergence to an attractor basin below the baseline mean, located entirely within the baseline energy range. |
 | **D: Novel + Appropriate** ("Self-Optimized" / Creative) | $3.0 \times 10^{-7}$ | $-144.98$ | $-145.00$ | $1.00$ | $11.20$ | Convergence to an attractor whose modal energy ($-145.00$) is only $0.8$ units below the baseline minimum ($-144.20$) on a single $W_0$ seed; treat this classification as borderline. |
 
+![Figure 4 Reproduction](so_repro_fig4.png)
+
+*Figure 1: Energy trajectories across Before Learning (BL, dark blue), Learning (red), and After Learning (AL, light blue) phases for learning rates alpha in {3e-8, 2e-4, 1e-6, 3e-7} on W0 seed 0, reproducing the four dynamical regimes of Figure 4 in Weber et al. (2025).*
+
 ### Methodological Observations:
 * **Sensitivity to Initial W₀:** The mapping from $\alpha$ to dynamical regime depends strongly on the specific random $W_0$ instance. In the 10-instance ablation sample below, per-W₀ regime counts in the full-reset arm are:
   * At $\alpha = 3.0 \times 10^{-7}$: Regime A = 8, Regime C = 1, Regime D = 1.
@@ -65,6 +69,10 @@ To evaluate whether partial state resets (randomly perturbing 25% of nodes at cy
 | **Partial (25%)** | $0.0$ | $-140.47 \pm 6.90$ | $-152.15 \pm 7.16$ | $0.02$ | $0.00$ |
 | **Partial (25%)** | $3.0 \times 10^{-7}$ | $-147.45 \pm 7.88$ | $-152.12 \pm 7.19$ | $1.00$ | $27.76 \pm 2.85$ |
 | **Partial (25%)** | $7.0 \times 10^{-7}$ | $-145.87 \pm 7.64$ | $-152.12 \pm 7.19$ | $1.00$ | $65.86 \pm 6.84$ |
+
+![Ablation Steady-State Energy](ablation_E_AL.png)
+
+*Figure 2: Steady-state energy E_AL across full and 25% partial reset conditions for three learning rates (alpha in {0, 3e-7, 7e-7}); grey lines show individual W0 instances and blue points indicate condition means.*
 
 ### Primary Contrasts (Paired over W₀, n = 10):
 * **Baseline Reset Effect (P₀ at α = 0):**
@@ -108,6 +116,14 @@ Under the cycle-dose rule with early plasticity, evaluating the paired contrast 
 * **T = 2000:** +1.25 (95% CI [-1.04, +3.45]) (unresolved; 95% CI includes zero).
 
 Across bootstrap replicates, the argmin share of $\rho = 1/e$ is $0.00$ at $T = 500$, $0.00$ at $T = 1000$, and $0.03$ at $T = 2000$.
+
+![Duty Cycle Early Window Curves](duty_default_curves.png)
+
+*Figure 3: Mean post-learning energy E_AL under the cycle-dose early-window rule plotted against duty-cycle fraction rho (left) and absolute plastic steps (right) for cycle lengths T in {500, 1000, 2000}.*
+
+![Duty Cycle Late Window Curves](duty_late_curves.png)
+
+*Figure 4: Mean post-learning energy E_AL under the cycle-dose late-window rule plotted against duty-cycle fraction rho (left) and absolute plastic steps (right) for cycle lengths T in {500, 1000, 2000}.*
 
 Under the late-window rule (`duty_late_runs.csv`), E_AL is nearly flat (span 0.8-2.6 energy units); no 1/e-specific optimum; at T=500 rho=1.0 is the worst late-window setting; 1/e was not contrasted against neighbouring rho values:
 * At T = 500: mean E_AL ranges from -145.55 (at ρ = 0.750) to -142.99 (at ρ = 1.000), a span of 2.55 units. Paired contrast 1/e vs 1.0 = -2.09 (95% CI [-3.88, -0.44]).
@@ -159,6 +175,10 @@ Comparing early vs. late plasticity under identical cycle doses ($D = 7.0 \times
 * At $T = 2000$: bootstrap 95% CIs include zero for $\rho \ge 0.30$ (at $\rho = 0.30$, CI is $[-0.240, +3.888]$).
 *(Untested hypothesis: early plasticity may imprint transient states during relaxation; this mechanism was not independently tested).*
 
+![Early Minus Late Plasticity Window](early_vs_late.png)
+
+*Figure 5: Paired difference in post-learning energy between early and late plasticity windows (E_AL(early) - E_AL(late)) as a function of duty fraction rho for T in {500, 1000, 2000}, with shaded 95% bootstrap confidence bands.*
+
 ---
 
 ## 4. Methodological Limitations
@@ -196,6 +216,9 @@ python so_duty_cycle.py --dose-rule alpha --w-seeds 10 --out duty_alpha
 
 # 7. Regenerate all report tables and bootstrap CIs (seed = 0, 10,000 resamples)
 python make_tables.py
+
+# 8. Generate synthesis figures (ablation_E_AL.png, early_vs_late.png; seed = 0, 10,000 resamples)
+python make_figures.py
 ```
 
 ### Repository File Index
@@ -204,9 +227,17 @@ python make_tables.py
 * `analysis_headroom.py`: Headroom-normalized analysis script evaluating synergy.
 * `so_duty_cycle.py`: Duty-cycle protocol runner (early/late windows, cycle/alpha dose rules).
 * `make_tables.py`: Deterministic table and bootstrap 95% CI generator script.
+* `make_figures.py`: Script generating `ablation_E_AL.png` and `early_vs_late.png` with bootstrap 95% CIs.
 * `duty_default_runs.csv`: Raw data for cycle-dose early-window runs ($n=10$).
 * `duty_late_runs.csv`: Raw data for cycle-dose late-window runs ($n=10$).
 * `duty_alpha_runs.csv`: Raw data for fixed-$\alpha$ early-window runs ($n=10$).
 * `so_ablation_runs.csv`: Raw data for the $2 \times 2$ ablation factorial design.
 * `so_repro_results.npz`: Trajectory and energy logs for the Figure 4 reproduction.
+* `so_repro_fig4.png`: Figure 4 reproduction scatter plot across the four dynamical regimes.
+* `so_repro_dW.png`: Weight norm change diagnostic plot.
+* `duty_default_curves.png`: Duty-cycle early-window energy curves.
+* `duty_late_curves.png`: Duty-cycle late-window energy curves.
+* `duty_alpha_curves.png`: Fixed-alpha duty-cycle energy curves.
+* `ablation_E_AL.png`: Steady-state energy across ablation conditions for all 10 W₀ instances.
+* `early_vs_late.png`: Paired contrast curves between early and late plasticity windows.
 * `LICENSE`: MIT License.
