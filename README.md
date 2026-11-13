@@ -3,9 +3,7 @@
 **Authors/Replication:** Mukesh Yadav  
 **Primary Reference:** Weber, Natalya, Guckelsberger, Christian, & Froese, Tom (2025). *Untapped Potential in Self-Optimization of Hopfield Networks: The Creativity of Unsupervised Learning*. Artificial Life (accepted manuscript, final author version), DOI: [10.1162/ARTL.a.10](https://doi.org/10.1162/ARTL.a.10).  
 
-Independent work; not affiliated with OIST.
-
-Code developed with AI assistance (Claude, Gemini); all results re-run and checked by the author.
+Independent work. Code was written with the help of AI coding assistants; I re-ran all experiments and checked the results.
 
 Tested on Python 3.14.3 (other versions untested).
 
